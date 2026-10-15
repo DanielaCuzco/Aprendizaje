@@ -5,9 +5,13 @@ library(readxl)
 library(stringr) #da funciones para trabajar con texto: buscar patrones, extraer, reemplazar, etc.
 library(dplyr) #da las funciones para filtrar, renombrar, seleccionar, mutar filas y columnas.
 library(tsibble)
+library(here)     
 
-# Ruta del archivo
-archivo <- "C:/Users/DELL/Downloads/DANYSS 2026B/SERIES TEMPORALES/LABORATORIO/DGGI_20260527_Histórico_promedios 2021-2025_vf.xlsx"
+archivo <- here("data", "DGGI_20260527_Historico_promedios_2021-2025_vf.xlsx")
+
+if (!file.exists(archivo)) {
+  stop("No se encontró el archivo. Verifica que esté en 'data/' dentro del repositorio.")
+}
 
 
 # 1. P_mat — Matemática
