@@ -3,8 +3,8 @@
 
 library(readxl)
 library(stringr) #da funciones para trabajar con texto: buscar patrones, extraer, reemplazar, etc.
-library(dplyr) #da las funciones para filtrar, renombrar, seleccionar, mutar filas y columnas.
-library(tsibble)
+library(tidyverse)
+library(fpp3)
 library(here)     
 
 archivo <- here("data", "DGGI_20260527_Historico_promedios_2021-2025_vf.xlsx")
@@ -66,7 +66,7 @@ dt_tabla <- dt_tabla %>%
          !is.na(P_lyl))
 
 data_lyl <- dt_tabla %>%
-  as_tsibble(key = c(Sub_nivele, Variable, Categoría), index = Año)
+  as_tsibble(key = c(Sub_nivel, Variable, Categoría), index = Año)
 
 nrow(data_lyl)
 head(data_lyl)
@@ -232,7 +232,7 @@ inicio <- which(raw[[1]] == "Año")[1]
 fin    <- which(str_detect(raw[[1]], "^Fuente:"))[1] - 1
 
 dt <- read_xlsx(archivo, sheet = "P_ifil",
-                skip  = inicio,
+                skip  = inicio-1,
                 n_max = fin - inicio + 1)
 
 dt_tabla <- dt
