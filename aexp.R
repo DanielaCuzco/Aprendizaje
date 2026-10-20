@@ -2,20 +2,19 @@ installed.packages("ggrepel")
 
 library(fpp3)
 library(readr)
-library(dplyr)
+library(tidyverse)
 library(ggplot2)
-library(ggrepel) 
+library(ggrepel) #Esta librería es para visualizar y que no se superpongan los años que está sobre las líneas del segundo gráfico
+library(here)
 
 
-datos <- read_csv("C:/Users/DELL/Documents/data/data.csv") |>
+datos <- read_csv(here("data", "data.csv")) |>
   as_tsibble(key = c(Sub_nivel, Variable, Categoria), index = Anio)
 
 # Gráfico 1
 #En este caso se hizo este gráfico para mostrar la evolución del promedio en Matemática entre los años 2021 y 2025.
-#Dado que la base de datos tene varias desagregaciones de los estudiantes (por Región, Sexo, Área y Sostenimiento). 
-#Al graficarla tendría muchas líneas que no me dejaría ver algún patrón 
-#Por lo que  apliqué un filtro Variable == "Nacional". 
-#Esta variable contiene el consolidado general del país para cada subnivel educativo. 
+#Apliqué el filtro sobre la variable "Nacional" para visualizar mejor la evolución sin sus subcategorías
+#Mi interés es estudiar el promedio de forma Nacional 
 
 
 datos |>
@@ -35,11 +34,27 @@ datos |>
 
 
 
+# COMENTARIO GRÁFICO 1
+# Tendencia: no hay una tendencia común, los datos por año son bastante diferentes.
+# Para el subnivel elemental se puede ver que en año 2022 cae fuerte y se recupera algo hasta
+# 2024 y vuelve a caer en 2025, lo que nos dice que para 2025 existe una tendencia decreciente.
+# Para el subnivel medio cae en 2022 y luego se mantiene casi estable.
+# Para bachillerato baja en 2022 y se recupera en 2025, sin tendencia clara.
+# Para el subnivel superior sube hasta 2023 y luego baja, formando una U invertida.
+# No hay estacionalidad pues los datos son anuales y no hay ciclo dentro del año.
+# Para la etacionariedad por cada subnivel podemos ver:
+# - Elemental no es estacionaria pues cambia de nivel en 2022 y caída final.
+# - Medio baja en 2022, pero desde ahí se ve estable.
+# - Bachillerato es el màs cercano a tener estacionariedad pues se mantiene bastante estable.
+# - Superior no es estacionaria pues cambia de nivel en 2023 y luego baja.
 
 
+
+
+
+# Gráfico 2
 # Necesitamos filtrar la variable Nacional porque quiero ver la evolución de los
-# subniveles de Bachillerato, Elemental, Medio y Superior, lo que quiero
-# es ver estos en general, sin separar por región, sexo o tipo de institución 
+# subniveles de Bachillerato, Elemental, Medio y Superior
 datos_nacional <- datos |>
   filter(Variable == "Nacional") |>
   as_tibble()
@@ -70,5 +85,8 @@ ggplot(datos_nacional, aes(x = Sub_nivel, y = P_mat, group = Anio, color = facto
     y = "Promedio (P_mat)"
   )
 
-
-
+# COMENTARIO GRÁFICO 2
+# Tendencia, estacionalidad y estacionariedad no se pueden evaluar aquí pues el eje x
+# es categórico, no de tiempo. Sin embargo, podemos ver que en 2021 los promedios son parejos 
+# en todos los subniveles, desde 2022 la caída se concentra en Elementaly Medio,
+# mientras Bachillerato y Superior se mantienen más estables.
