@@ -11,10 +11,6 @@ library(here)
 datos <- read_csv(here("data", "data.csv")) |>
   as_tsibble(key = c(Sub_nivel, Variable, Categoria), index = Anio)
 
-
-datos <- read_csv("C:/Users/DELL/Documents/data/data.csv") |>
-  as_tsibble(key = c(Sub_nivel, Variable, Categoria), index = Anio)
-
 # Gráfico 1
 #En este caso se hizo este gráfico para mostrar la evolución del promedio en Matemática entre los años 2021 y 2025.
 #Apliqué el filtro sobre la variable "Nacional" para visualizar mejor la evolución sin sus subcategorías
