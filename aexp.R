@@ -4,7 +4,12 @@ library(fpp3)
 library(readr)
 library(dplyr)
 library(ggplot2)
-library(ggrepel) 
+library(ggrepel) #Esta librería es para visualizar y que no se superpongan los años que está sobre las líneas del segundo gráfico
+library(here)
+
+
+datos <- read_csv(here("data", "data.csv")) |>
+  as_tsibble(key = c(Sub_nivel, Variable, Categoria), index = Anio)
 
 
 datos <- read_csv("C:/Users/DELL/Documents/data/data.csv") |>
@@ -12,10 +17,8 @@ datos <- read_csv("C:/Users/DELL/Documents/data/data.csv") |>
 
 # Gráfico 1
 #En este caso se hizo este gráfico para mostrar la evolución del promedio en Matemática entre los años 2021 y 2025.
-#Dado que la base de datos tene varias desagregaciones de los estudiantes (por Región, Sexo, Área y Sostenimiento). 
-#Al graficarla tendría muchas líneas que no me dejaría ver algún patrón 
-#Por lo que  apliqué un filtro Variable == "Nacional". 
-#Esta variable contiene el consolidado general del país para cada subnivel educativo. 
+#Apliqué el filtro sobre la variable "Nacional" para visualizar mejor la evolución sin sus subcategorías
+#Mi interés es estudiar el promedio de forma Nacional 
 
 
 datos |>
@@ -35,11 +38,9 @@ datos |>
 
 
 
-
-
+# Gráfico 2
 # Necesitamos filtrar la variable Nacional porque quiero ver la evolución de los
-# subniveles de Bachillerato, Elemental, Medio y Superior, lo que quiero
-# es ver estos en general, sin separar por región, sexo o tipo de institución 
+# subniveles de Bachillerato, Elemental, Medio y Superior
 datos_nacional <- datos |>
   filter(Variable == "Nacional") |>
   as_tibble()
