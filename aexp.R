@@ -2,7 +2,7 @@ installed.packages("ggrepel")
 
 library(fpp3)
 library(readr)
-library(dplyr)
+library(tidyverse)
 library(ggplot2)
 library(ggrepel) #Esta librería es para visualizar y que no se superpongan los años que está sobre las líneas del segundo gráfico
 library(here)
