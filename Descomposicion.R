@@ -1,4 +1,4 @@
-#aquí debo trabajar con la base de datos de Dake y hacer la descomposición de la serie temporal 
+#Autor del código: Joseph Piuri
 
 library(fpp3)
 library(slider)
@@ -188,7 +188,9 @@ energia_all_componentes |>
   )
 
 
-#Esta es mi auditoría: Daniela Cuzco 
+#Auditora: Daniela Cuzco 
+
+
 #Voy a usar la función de descomposición aditiva para verificar que 
 #los gráficos manuales se hayan realizado de forma correcta 
 #Comparando el gráfico con los anteriores puedo ver que en efecto
