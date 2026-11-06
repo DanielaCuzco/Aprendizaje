@@ -110,25 +110,6 @@ energia_ma |>
   )
 
 
-#DESCOMPOSICION ADITIVA: Yt = St + Tt + Rt
-descomposicion_energia <- energia_ts_da |>
-  model(
-    classical_decomposition(
-      demanda_real ~ season(period = 24),
-      type = "additive"
-    )
-  ) |>
-  components()
-
-# Visualización completa 
-descomposicion_energia |>
-  autoplot() +
-  labs(
-    title = "Descomposición aditiva de la demanda de energía (2018)",
-    y = "Demanda real",
-    x = "Fecha"
-  )
-
 
 #COMPONENTES EXPLÍCITOS
 
@@ -205,3 +186,28 @@ energia_all_componentes |>
     x = "Fecha",
     y = "Demanda real"
   )
+
+
+#Esta es mi auditoría: Daniela Cuzco 
+#Voy a usar la función de descomposición aditiva para verificar que 
+#los gráficos manuales se hayan realizado de forma correcta 
+#Comparando el gráfico con los anteriores puedo ver que en efecto
+#están bien hechas
+#Hubo muy buen manejo de las partes faltantes de la base, usó lo que 
+#hemos visto en el DataCamp el curso: el paquete zoo
+#Y me dejó ver a tendencia-ciclo de la demanda eléctrica, muy importante
+#Solo faltó colocar bien el título del gráfico de residuo
+#De ahí todo muy bien y de hecho aprendí nuevas cosas.
+#Aquí la descomposición Aditiva para visualizar los gráficos y comparar
+desc_aditiva_2018 <- energia_ts_da |>
+model(
+classical_decomposition(demanda_real, type = "additive")
+)
+Graficamos los 4 paneles
+desc_aditiva_2018 |>
+components() |>
+autoplot() +
+labs(
+x = "Fecha",
+title = "Descomposición Aditiva - Demanda Eléctrica (2018)"
+)
